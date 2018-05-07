@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Polygon Sample</title>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var pin_image = './static/images/location.png'
+        var map;
+
+        var fixed_points = [{
+                "title": "Home",
+                coordinates: {
+                    lat: 40.989936,
+                    lng: 29.058832
+                }
+            },
+            {
+                "title": "Hospital",
+                coordinates: {
+                    lat: 40.9878352,
+                    lng: 29.0620297
+                }
+            },
+            {
+                "title": "Metro",
+                coordinates: {
+                    lat: 40.9936721,
+                    lng: 29.0703043
+                }
+            },
+        ]
+
+        var polygon_points = [{
+                lng: 29.057358333313005,
+                lat: 40.99210572456409
+            },
+            {
+                lng: 29.048861095153825,
+                lat: 40.990680439142736
+            },
+            {
+                lng: 29.05323846026613,
+                lat: 40.98436346244282
+            },
+            {
+                lng: 29.060276576721208,
+                lat: 40.98397470564919
+            },
+            {
+                lng: 29.06847340747072,
+                lat: 40.986922720796215
+            },
+            {
+                lng: 29.06624180957033,
+                lat: 40.99116633536153
+            },
+            {
+                lng: 29.06147820635988,
+                lat: 40.991004370353146
+            },
+            {
+                lng: 29.059589931213395,
+                lat: 40.99466468242891
+            },
+            {
+                lng: 29.057361076652796,
+                lat: 40.99209753155075
+            }
+        ]
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: fixed_points[0].coordinates
+            });
+
+            fixed_points.forEach(point => {
+                var marker = new google.maps.Marker({
+                    position: point.coordinates,
+                    title: point.title,
+                    map: map,
+                    icon: pin_image
+                });
+            });
+
+
+            var withinArea = new google.maps.Polygon({
+                paths: polygon_points,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+
+            withinArea.setMap(map);
+
+            polygon_points.forEach(coor => {
+                var marker = new google.maps.Marker({
+                    position: coor,
+                    map: map
+                });
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQwHV60idykaQyGGrwprn-T-mFJ5BCph8&callback=initMap">
+    </script>
+</body>
+
+</html>

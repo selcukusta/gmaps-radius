@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Envelope Sample</title>
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        var pin_image = './static/images/location.png'
+        var map;
+
+        var turk_telekom_arena_point = {
+            "title": "Türk Telekom Arena (41.103235, 28.991087)",
+            "coordinates": {
+                lat: 41.103235,
+                lng: 28.991087
+            }
+        }
+
+        var upper_left_point = {
+            "title": "41.113246, 28.982146",
+            "coordinates": {
+                lat: 41.113246,
+                lng: 28.982146
+            }
+        }
+
+        var lower_right_point = {
+            "title": "41.10050, 29.001415",
+            "coordinates": {
+                lat: 41.10050,
+                lng: 29.001415
+            }
+        }
+
+        function initMap() {
+            /* Initialize map */
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: turk_telekom_arena_point.coordinates
+            });
+
+            /* Draw rectangle with upper left and lower right point */
+            new google.maps.Rectangle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                bounds: new google.maps.LatLngBounds(upper_left_point.coordinates, lower_right_point.coordinates)
+            });
+
+            /* Add markers */
+            new google.maps.Marker({
+                position: turk_telekom_arena_point.coordinates,
+                title: turk_telekom_arena_point.title,
+                map: map,
+                icon: pin_image
+            });
+
+            new google.maps.Marker({
+                position: upper_left_point.coordinates,
+                title: upper_left_point.title,
+                map: map
+            });
+
+            new google.maps.Marker({
+                position: lower_right_point.coordinates,
+                title: lower_right_point.title,
+                map: map
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQwHV60idykaQyGGrwprn-T-mFJ5BCph8&callback=initMap">
+    </script>
+</body>
+
+</html>
